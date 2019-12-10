@@ -1,8 +1,9 @@
-const mailgunJS = require('mailgun-js')
+const mailgun = require('mailgun.js')
 
 module.exports = class Mailer {
     constructor({ apiKey, domain }, title, from, to = 'furimako@gmail.com') {
-        this.mailgun = mailgunJS({ apiKey, domain })
+        this.mailgun = mailgun.client({ username: 'api', key: apiKey })
+        this.domain = domain
         this.title = title
         this.from = from
         this.to = to
@@ -16,14 +17,12 @@ module.exports = class Mailer {
             text
         }
         
-        this.mailgun.messages().send(data, (err, body) => {
-            if (err) {
-                throw new Error(`some error occurred in mailer\n${err}`)
-            }
-            console.log('--- sending mail ---')
-            console.log(`body: ${body}`)
-            console.log(`<<text>>\n${text}`)
-            console.log('--------------------')
-        })
+        this.mailgun.messages.create(this.domain, data)
+            .then((msg) => {
+                console.log('--- sending mail ---')
+                console.log(`body: ${msg}`)
+                console.log(`<<text>>\n${text}`)
+                console.log('--------------------')
+            })
     }
 }
