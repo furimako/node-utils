@@ -1,28 +1,43 @@
-const mailgun = require('mailgun.js')
+const nodemailer = require('nodemailer')
 
 module.exports = class Mailer {
-    constructor({ apiKey, domain }, title, from, to = 'furimako@gmail.com') {
-        this.mailgun = mailgun.client({ username: 'api', key: apiKey })
-        this.domain = domain
+    constructor({ host, user, pass }, { title, defaultFrom, defaultTo }) {
         this.title = title
-        this.from = from
-        this.to = to
+        this.defaultFrom = defaultFrom
+        this.defaultTo = defaultTo
+        
+        this.transporter = nodemailer.createTransport({
+            host,
+            port: 465,
+            secure: true,
+            auth: {
+                user,
+                pass
+            }
+        })
+        this.transporter.verify((err) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('Server is ready to take our messages')
+            }
+        })
     }
     
-    send(subject, text) {
-        const data = {
-            from: this.from,
-            to: this.to,
+    send({
+        from = this.defaultFrom, to = this.defaultTo, subject, text
+    }) {
+        const message = {
+            from,
+            to,
             subject: `[${this.title}][${process.env.NODE_ENV}] ${subject}`,
             text
         }
+        console.log('sending the message with mailer.js')
+        console.log('--- message start ---')
+        console.log(`${JSON.stringify(message)}`)
+        console.log('--- message end ---')
         
-        this.mailgun.messages.create(this.domain, data)
-            .then((msg) => {
-                console.log('--- sending mail ---')
-                console.log(`body: ${msg}`)
-                console.log(`<<text>>\n${text}`)
-                console.log('--------------------')
-            })
+        return this.transporter.sendMail(message)
     }
 }
