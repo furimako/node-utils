@@ -25,13 +25,14 @@ module.exports = class Mailer {
     }
     
     send({
-        from = this.defaultFrom, to = this.defaultTo, subject, text
+        from = this.defaultFrom, to = this.defaultTo, subject, text, headers
     }) {
         const message = {
             from,
             to,
-            subject: `[${this.title}][${process.env.NODE_ENV}] ${subject}`,
-            text
+            subject: `【${this.title}】${subject}${(process.env.NODE_ENV === 'production') ? '' : ' (dev)'}`,
+            text,
+            headers
         }
         console.log('sending the message with mailer.js')
         console.log('--- message start ---')
