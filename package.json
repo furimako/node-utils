@@ -10,6 +10,6 @@
     },
     "main": "index.js",
     "dependencies": {
-        "nodemailer": "^6.4.15"
+        "nodemailer": "^6.4.16"
     }
 }
