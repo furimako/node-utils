@@ -2,24 +2,30 @@ module.exports = {
     getISO8610: () => {
         const {
             year, month, date, hours, minutes, seconds
-        } = convertToJSTObj(new Date())
+        } = _convertToJSTObj(new Date())
         return `${year}-${month}-${date}T${hours}:${minutes}:${seconds}+09:00`
     },
     convertToDate: (dateObj) => {
+        if (!dateObj) {
+            return ''
+        }
         const {
             year, month, date
-        } = convertToJSTObj(dateObj)
+        } = _convertToJSTObj(dateObj)
         return `${year}/${month}/${date}`
     },
     convertToDatetime: (dateObj) => {
+        if (!dateObj) {
+            return ''
+        }
         const {
             year, month, date, hours, minutes, seconds
-        } = convertToJSTObj(dateObj)
+        } = _convertToJSTObj(dateObj)
         return `${year}/${month}/${date} ${hours}:${minutes}:${seconds}  JST(UTC+09:00)`
     }
 }
 
-function convertToJSTObj(dateObj) {
+function _convertToJSTObj(dateObj) {
     const dateJSTObj = new Date(dateObj.getTime() + 9 * 60 * 60 * 1000)
     
     const year = dateJSTObj.getUTCFullYear()
