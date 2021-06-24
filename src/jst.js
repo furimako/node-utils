@@ -1,8 +1,12 @@
 module.exports = {
-    getISO8610: () => {
+    convertToISO8610: (dateObj) => {
+        if (!dateObj) {
+            return ''
+        }
         const {
             year, month, date, hours, minutes, seconds
-        } = _convertToJSTObj(new Date())
+        } = _convertToJSTObj(dateObj)
+
         return `${year}-${month}-${date}T${hours}:${minutes}:${seconds}+09:00`
     },
     convertToDate: (dateObj) => {
@@ -12,6 +16,7 @@ module.exports = {
         const {
             year, month, date
         } = _convertToJSTObj(dateObj)
+
         return `${year}/${month}/${date}`
     },
     convertToDatetime: (dateObj) => {
@@ -21,6 +26,7 @@ module.exports = {
         const {
             year, month, date, hours, minutes, seconds
         } = _convertToJSTObj(dateObj)
+        
         return `${year}/${month}/${date} ${hours}:${minutes}:${seconds}  JST(UTC+09:00)`
     }
 }

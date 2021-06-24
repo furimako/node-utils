@@ -1,6 +1,12 @@
 const JST = require('./jst')
 
 module.exports = {
-    info: msg => console.log(`${JST.getISO8610()} [INFO] ${msg}`),
-    error: msg => console.error(`${JST.getISO8610()} [ERROR] ${msg}`)
+    info: (msg) => {
+        const dateNow = new Date()
+        console.log(`${JST.convertToISO8610(dateNow)} [INFO] ${msg}`)
+    },
+    error: (msg) => {
+        const dateNow = new Date()
+        console.error(`${JST.convertToISO8610(dateNow)} [ERROR] ${msg}`)
+    }
 }
