@@ -9,7 +9,7 @@ module.exports = {
 
         return `${year}-${month}-${date}T${hours}:${minutes}:${seconds}+09:00`
     },
-    convertToDate: (dateObj) => {
+    convertToDateStr: (dateObj) => {
         if (!dateObj) {
             return ''
         }
@@ -19,7 +19,7 @@ module.exports = {
 
         return `${year}/${month}/${date}`
     },
-    convertToDatetime: (dateObj) => {
+    convertToDatetimeStr: (dateObj) => {
         if (!dateObj) {
             return ''
         }
