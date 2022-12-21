@@ -1,12 +1,12 @@
 {
     "name": "node-utils",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "utility tool for Node.js application",
     "author": "furimako <furimako@gmail.com>",
     "license": "MIT",
     "repository": "github:furimako/node-utils",
     "engines": {
-        "node": ">=14.0.0 <15.0.0"
+        "node": ">=16.0.0"
     },
     "main": "index.js",
     "dependencies": {
